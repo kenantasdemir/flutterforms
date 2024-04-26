@@ -7,7 +7,8 @@ import "TurkishStrings.dart";
 
 class PersonalInfos extends StatefulWidget {
   final PageStorageKey key;
-  const PersonalInfos( {required this.key});
+
+  const PersonalInfos({required this.key});
 
   @override
   State<PersonalInfos> createState() => _PersonalInfosState();
@@ -17,7 +18,6 @@ class _PersonalInfosState extends State<PersonalInfos> {
   bool isPasswordObscured = true;
   bool isPasswordConfirmationObscured = true;
 
-  final TextEditingController controller = TextEditingController();
   String initialCountry = 'NG';
   PhoneNumber number = PhoneNumber(isoCode: 'TR');
 
@@ -26,6 +26,9 @@ class _PersonalInfosState extends State<PersonalInfos> {
   final _outerFormKey = GlobalKey<FormState>();
   final GlobalKey<FlutterPwValidatorState> validatorKey =
       GlobalKey<FlutterPwValidatorState>();
+
+  final TextEditingController controller = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
@@ -34,12 +37,6 @@ class _PersonalInfosState extends State<PersonalInfos> {
   final TextEditingController emailController = TextEditingController();
 
   final TextEditingController tcNoController = TextEditingController();
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +56,6 @@ class _PersonalInfosState extends State<PersonalInfos> {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
         child: Form(
-
           autovalidateMode: AutovalidateMode.onUserInteraction,
           key: _outerFormKey,
           child: Column(
@@ -250,39 +246,37 @@ class _PersonalInfosState extends State<PersonalInfos> {
                       if (_validate) {
                         _outerFormKey.currentState!.save();
 
-
-
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Center(
-                                child: SingleChildScrollView(
-                                  child: AlertDialog(
-                                    title: Text("Form Tamamlandı"),
-                                    content: Column(
-                                      children: [
-                                        Text("TC-NO -> ${tcNoController.text}"),
-                                        Text("Ad-Soyad -> ${adSoyadController.text}"),
-                                        Text("Email -> ${emailController.text}"),
-                                        Text("Şifre -> ${_passwordController.text}"),
-                                        Text("TEL -> ${controller.text}"),
-
-                                      ],
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Text("Tamam"),
-                                      ),
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Center(
+                              child: SingleChildScrollView(
+                                child: AlertDialog(
+                                  title: Text("Form Tamamlandı"),
+                                  content: Column(
+                                    children: [
+                                      Text("TC-NO -> ${tcNoController.text}"),
+                                      Text(
+                                          "Ad-Soyad -> ${adSoyadController.text}"),
+                                      Text("Email -> ${emailController.text}"),
+                                      Text(
+                                          "Şifre -> ${_passwordController.text}"),
+                                      Text("TEL -> ${controller.text}"),
                                     ],
                                   ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text("Tamam"),
+                                    ),
+                                  ],
                                 ),
-                              );
-                            },
-                          );
-
+                              ),
+                            );
+                          },
+                        );
                       }
                     },
                     child: Text("Formu Doğrula"))
@@ -292,5 +286,15 @@ class _PersonalInfosState extends State<PersonalInfos> {
     );
   }
 
-
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controller.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    adSoyadController.dispose();
+    emailController.dispose();
+    tcNoController.dispose();
+  }
 }

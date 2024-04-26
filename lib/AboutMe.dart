@@ -7,10 +7,19 @@ class AboutMe extends StatelessWidget{
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("Merhaba"),
+        title: Text("Merhaba, Ben"),
       ),
-      body: Center(
-        child: Text("Benim Adım Kenan Taşdemir"),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
+          child:Column(
+            children: [
+              Text("Kenan Taşdemir"),
+              Text("Bilgisayar teknolojisi ve bilişim sistemleri"),
+              Text("4.sınıf")
+            ],
+          ),
+        ),
       ),
     );
   }
